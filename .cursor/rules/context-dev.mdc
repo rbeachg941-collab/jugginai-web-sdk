@@ -1,0 +1,31 @@
+---
+description: Context.dev and Bright Data wrapper conventions for this repo
+alwaysApply: true
+---
+
+# Context.dev and Bright Data
+
+Application code reads credentials from the environment only. Never hardcode, log, or commit secrets.
+
+## Context.dev
+
+- Env var: `CONTEXT_DEV_API_KEY`
+- Wrapper module: `src/contextdev.ts`
+- Official SDK: `context.dev` (`new ContextDev({ apiKey, timeout, maxRetries })`)
+- SDK docs: https://docs.context.dev/sdks/typescript.md
+
+Endpoints (method names verified in `context.dev@3`):
+
+- Scrape markdown — `POST /web/scrape` via `client.web.scrape` — https://docs.context.dev/api-reference/web-scraping/scrape.md
+- Web search — `POST /web/search` via `client.web.search` — https://docs.context.dev/api-reference/web-scraping/search.md
+- Brand retrieve — `POST /brand/retrieve` via `client.brand.retrieve` — https://docs.context.dev/api-reference/brand-intelligence/brand.md
+
+Credits come from `key_metadata.credits_consumed` or the `X-Credits-Used` response header. A 400 with `error_code` `NOT_FOUND` or `WEBSITE_NOT_FOUND` is mapped to `ContextDevNotFoundError` and is not retried.
+
+## Bright Data
+
+- Wrapper module: `src/brightdata.ts`
+- ISP proxy env: `BRD_ISP_PROXY_HOST`, `BRD_ISP_PROXY_PORT`, `BRD_ISP_PROXY_USER`, `BRD_ISP_PROXY_PASS`
+- Browser API env: `BRD_BROWSER_WS`
+- `fetchViaIspProxy(url, { country, session })` uses undici `ProxyAgent`
+- `withBrowser(fn)` uses Playwright `chromium.connectOverCDP`
