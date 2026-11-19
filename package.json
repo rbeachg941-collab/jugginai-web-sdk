@@ -1,0 +1,44 @@
+{
+  "name": "jugginai-web-sdk",
+  "version": "0.1.0",
+  "description": "Server-side TypeScript wrappers for Context.dev and Bright Data.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "keywords": [
+    "context.dev",
+    "brightdata",
+    "scrape",
+    "proxy"
+  ],
+  "dependencies": {
+    "context.dev": "^3.30.0",
+    "playwright-core": "^1.65.1",
+    "undici": "^8.12.4"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.1"
+  }
+}
